@@ -1,0 +1,25 @@
+{
+  "name": "fractal-utils",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test"
+  },
+  "dependencies": {
+    "@noble/secp256k1": "^2.1.0",
+    "canonicalize": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.10",
+    "typescript": "^5.5.4"
+  }
+}
