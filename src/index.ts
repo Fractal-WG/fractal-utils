@@ -55,3 +55,24 @@ export async function signPayload(
 
   return Buffer.from(compact).toString("base64");
 }
+
+const KOINU = 100_000_000;
+const KOINU_DECIMALS = 8;
+
+export const dogeToKoinu = (s: string): number => {
+  const m = s.trim().match(/^([+-])?(\d+)(?:\.(\d{0,8}))?$/);
+  if (!m) throw new Error(`invalid amount: ${s}`);
+  const sign = m[1] === "-" ? -1 : 1;
+  const w = m[2].replace(/^0+/, "") || "0";
+  const f = (m[3] || "").padEnd(8, "0");
+
+  // Max safe: whole <= 90,071,992 (because (whole*1e8 + frac) must fit 2^53-1)
+  if (w.length > 8 || (w.length === 8 && Number(w) > 90071992)) {
+    throw new Error("amount too large for a JS number; use the string version");
+  }
+
+  return sign * (Number(w) * KOINU + Number(f));
+};
+
+export const koinuToDoge = (k: number): string =>
+  `${k / KOINU}.${(k % KOINU).toString().padStart(8, "0")}`;
