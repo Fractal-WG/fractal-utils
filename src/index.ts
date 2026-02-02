@@ -74,5 +74,10 @@ export const dogeToKoinu = (s: string): number => {
   return sign * (Number(w) * KOINU + Number(f));
 };
 
-export const koinuToDoge = (k: number): string =>
-  `${k / KOINU}.${(k % KOINU).toString().padStart(8, "0")}`;
+export const koinuToDoge = (k: number): string => {
+  const sign = k < 0 ? "-" : "";
+  const absK = Math.abs(k);
+  const whole = Math.floor(absK / KOINU);
+  const frac = absK % KOINU;
+  return `${sign}${whole}.${frac.toString().padStart(8, "0")}`;
+};
